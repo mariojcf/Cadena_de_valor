@@ -3,157 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAV: Auditoría Cruz Verde</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Auditoría de Cadena de Valor - Cruz Verde</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lexend:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --cv-green: #1b4332;
-            --cv-accent: #52b788;
+            --primary: #1b4332;
+            --secondary: #2d6a4f;
+            --accent: #52b788;
+            --light-bg: #f0f7f4;
+            --white: #ffffff;
+            --text-dark: #1a1c1a;
+            --text-muted: #555e58;
+            --border: #d8e2dc;
         }
-        body { font-family: 'Inter', sans-serif; background-color: #f0f7f4; color: #1a1c1a; }
-        h1, h2, h3, h4 { font-family: 'Lexend', sans-serif; }
-        
-        .header-cv { 
-            background: var(--cv-green); 
-            color: white; 
-            padding: 40px 0; 
-            border-radius: 0 0 40px 40px; 
-            box-shadow: 0 10px 25px rgba(27, 67, 50, 0.2);
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 1300px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
             margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(27, 67, 50, 0.2);
         }
 
-        .card { 
-            border: none; 
-            border-radius: 20px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05); 
-            page-break-inside: avoid;
+        .header-title h1 {
+            font-family: 'Lexend', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
         }
 
-        .block-viz {
-            border: 1px solid #d8e2dc;
-            border-radius: 10px;
-            padding: 15px;
+        .header-title p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* MAIN LAYOUT */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+        }
+
+        /* VALUE CHAIN DIAGRAM */
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+
+        .section-header i { font-size: 1.4rem; }
+        .section-header h2 { font-family: 'Lexend', sans-serif; font-size: 1.2rem; }
+
+        /* Porter Diagram Styles */
+        .value-chain-viz {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .support-layer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) 80px;
+            gap: 8px;
+        }
+
+        .primary-layer {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr) 80px;
+            gap: 8px;
+        }
+
+        .block {
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 15px 10px;
             text-align: center;
-            background: white;
-            transition: 0.3s;
-            cursor: default;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--secondary);
         }
-        .block-viz:hover { background: #f0f7f4; border-color: var(--cv-accent); }
-        .block-viz i { color: var(--cv-green); font-size: 1.5rem; margin-bottom: 10px; }
 
-        .btn-cv-primary { background: var(--cv-green); color: white; border: none; padding: 12px; font-weight: 700; border-radius: 10px; }
-        .btn-cv-primary:hover { background: #2d6a4f; color: white; }
-        
-        .btn-cv-pdf { background: #198754; color: white; border: none; padding: 12px; font-weight: 700; border-radius: 10px; }
+        .block:hover {
+            border-color: var(--accent);
+            background: var(--light-bg);
+            transform: translateY(-2px);
+        }
 
-        .result-panel { border-left: 6px solid var(--cv-accent); background: #f9fffb; padding: 20px; border-radius: 12px; }
+        .block.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--primary);
+        }
 
-        @media print {
-            .no-print { display: none !important; }
-            .header-cv { background: white !important; color: black !important; border-bottom: 2px solid #eee; }
+        .block i { font-size: 1.2rem; }
+
+        .margin-block {
+            grid-row: span 1;
+            background: var(--primary);
+            color: white;
+            clip-path: polygon(0% 0%, 70% 0%, 100% 50%, 70% 100%, 0% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            writing-mode: vertical-rl;
+            padding: 10px;
+        }
+
+        /* CALCUALDORA / AUDITORÍA */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .input-field {
+            margin-bottom: 15px;
+        }
+
+        .input-field label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-muted);
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .input-field input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.1);
+        }
+
+        .btn-calc {
+            grid-column: span 2;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-calc:hover { background: var(--primary); }
+
+        /* RESULTS PANEL */
+        .display-panel {
+            min-height: 300px;
+        }
+
+        .info-box {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            margin-top: 15px;
+        }
+
+        .info-box h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .kpi-value {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .kpi-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* AUDIT RESULT */
+        #audit-result {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            background: #fff;
+            border: 1px solid var(--border);
+        }
+
+        .badge-success { background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .badge-warning { background: #fef9c3; color: #854d0e; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+
+        @media (max-width: 1024px) {
+            .main-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<div class="header-cv text-center no-print">
-    <div class="container">
-        <p class="text-uppercase mb-1 fw-bold" style="letter-spacing: 2px; opacity: 0.8;">Ingeniería de Sistemas - Auditoría Estratégica</p>
-        <h1 class="display-5 fw-bold">Cruz Verde: Sistema de Auditoría de Valor</h1>
-    </div>
-</div>
+<div class="app-container">
+    <header>
+        <div class="header-title">
+            <p>Framework de Gestión Estratégica</p>
+            <h1>Cruz Verde: Auditoría de Cadena de Valor</h1>
+        </div>
+        <div style="text-align: right;">
+            <span class="badge-success">SISTEMA ACTIVO 2026</span>
+        </div>
+    </header>
 
-<div class="container mb-5" id="area-reporte">
-    <div class="row g-4">
-        <div class="col-lg-7">
-            <div class="card p-4 h-100">
-                <div class="d-flex align-items-center mb-4">
-                    <i class="fas fa-calculator fa-2x text-success me-3"></i>
-                    <h3 class="mb-0 text-dark">Consola de Datos Cuantitativos</h3>
+    <div class="main-grid">
+        <!-- LADO IZQUIERDO: DIAGRAMA E INFORMACIÓN -->
+        <div class="column">
+            <div class="card">
+                <div class="section-header">
+                    <i class="fas fa-project-diagram"></i>
+                    <h2>Visualizador de Procesos (Porter)</h2>
                 </div>
 
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">Ingresos Proyectados (Q)</label>
-                        <input type="number" id="ing-input" class="form-control" placeholder="1000000">
+                <div class="value-chain-viz">
+                    <!-- Actividades de Soporte -->
+                    <div class="support-layer">
+                        <div class="block" onclick="inspect('infra')"><i class="fas fa-building"></i><span>Infraestructura</span></div>
+                        <div class="block" onclick="inspect('rrhh')"><i class="fas fa-users-cog"></i><span>RRHH</span></div>
+                        <div class="block" onclick="inspect('tech')"><i class="fas fa-microchip"></i><span>Tecnología</span></div>
+                        <div class="block" onclick="inspect('comp')"><i class="fas fa-shopping-basket"></i><span>Abastecimiento</span></div>
+                        <div class="margin-block" style="grid-row: span 2;">M<br>A<br>R<br>G<br>E<br>N</div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">Costos Logísticos (Q)</label>
-                        <input type="number" id="log-input" class="form-control" placeholder="150000">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">Operaciones Retail (Q)</label>
-                        <input type="number" id="ops-input" class="form-control" placeholder="400000">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">Mkt y Programas Lealtad (Q)</label>
-                        <input type="number" id="mkt-input" class="form-control" placeholder="80000">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">Gastos Admins (Q)</label>
-                        <input type="number" id="adm-input" class="form-control" placeholder="120000">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">I+D y Tecnología Nube (Q)</label>
-                        <input type="number" id="tech-input" class="form-control" placeholder="50000">
+                    <!-- Actividades Primarias -->
+                    <div class="primary-layer">
+                        <div class="block" onclick="inspect('lin')"><i class="fas fa-box-open"></i><span>Log. Entrada</span></div>
+                        <div class="block" onclick="inspect('ops')"><i class="fas fa-pills"></i><span>Operaciones</span></div>
+                        <div class="block" onclick="inspect('lout')"><i class="fas fa-truck-ramp-box"></i><span>Log. Salida</span></div>
+                        <div class="block" onclick="inspect('mkt')"><i class="fas fa-bullhorn"></i><span>Marketing</span></div>
+                        <div class="block" onclick="inspect('srv')"><i class="fas fa-user-nurse"></i><span>Servicio</span></div>
                     </div>
                 </div>
 
-                <div class="mt-4 row g-2 no-print">
-                    <div class="col-6">
-                        <button class="btn btn-cv-primary w-100" onclick="runAudit()">EJECUTAR AUDITORÍA</button>
-                    </div>
-                    <div class="col-6">
-                        <button class="btn btn-cv-pdf w-100" onclick="downloadPDF()">
-                            <i class="fas fa-file-pdf me-2"></i>DESCARGAR REPORTE
-                        </button>
+                <div id="inspector-panel" class="display-panel">
+                    <div class="info-box" style="margin-top: 30px; text-align: center; border: 1px dashed var(--accent);">
+                        <p>Seleccione un bloque del diagrama para realizar el análisis descriptivo y cuantitativo del área.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-5">
-            <div class="card p-4 h-100" id="audit-result-panel">
-                <h3 class="text-dark mb-4 border-bottom pb-2">Diagnóstico de Valor</h3>
-                <div id="initial-msg" class="text-center py-5">
-                    <i class="fas fa-chart-line fa-3x text-light mb-3"></i>
-                    <p class="text-muted small">Ingrese los valores operativos para generar el análisis de Cruz Verde.</p>
+        <!-- LADO DERECHO: CALCULADORA AUDITORÍA -->
+        <div class="column">
+            <div class="card">
+                <div class="section-header">
+                    <i class="fas fa-calculator"></i>
+                    <h2>Consola de Auditoría Cuantitativa</h2>
                 </div>
 
-                <div id="audit-output" style="display: none;">
-                    <div class="row text-center mb-4">
-                        <div class="col-6">
-                            <div class="p-3 bg-light rounded border">
-                                <span class="d-block text-muted small">COSTO TOTAL</span>
-                                <h4 class="fw-bold mb-0" id="res-cost-val">Q0</h4>
-                            </div>
+                <div class="calculator-grid">
+                    <div class="input-field">
+                        <label>Ingresos Proyectados (Q)</label>
+                        <input type="number" id="ing-input" placeholder="Ej. 1000000">
+                    </div>
+                    <div class="input-field">
+                        <label>Costos Logísticos (Q)</label>
+                        <input type="number" id="log-input" placeholder="Ej. 150000">
+                    </div>
+                    <div class="input-field">
+                        <label>Costos Operativos (Q)</label>
+                        <input type="number" id="ops-input" placeholder="Ej. 400000">
+                    </div>
+                    <div class="input-field">
+                        <label>Inversión Mkt/Ventas (Q)</label>
+                        <input type="number" id="mkt-input" placeholder="Ej. 80000">
+                    </div>
+                    <div class="input-field">
+                        <label>Gastos Administrativos (Q)</label>
+                        <input type="number" id="adm-input" placeholder="Ej. 120000">
+                    </div>
+                    <div class="input-field">
+                        <label>I+D y Tecnología (Q)</label>
+                        <input type="number" id="tech-input" placeholder="Ej. 50000">
+                    </div>
+                    <button class="btn-calc" onclick="runAudit()">EJECUTAR AUDITORÍA ESTRATÉGICA</button>
+                </div>
+
+                <div id="audit-result">
+                    <div style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+                        <span id="audit-status" class="badge-success">ANÁLISIS COMPLETADO</span>
+                    </div>
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <span class="kpi-label">Margen de Utilidad</span>
+                            <span class="kpi-value" id="res-margin-val">0%</span>
                         </div>
-                        <div class="col-6">
-                            <div class="p-3 bg-light rounded border">
-                                <span class="d-block text-muted small">EFICIENCIA</span>
-                                <h4 class="fw-bold mb-0 text-success" id="res-margin-val">0%</h4>
-                            </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Costo Total</span>
+                            <span class="kpi-value" id="res-cost-val">Q0</span>
                         </div>
                     </div>
-                    <div class="result-panel mb-3">
-                        <h6 class="fw-bold text-success"><i class="fas fa-microscope me-2"></i>Análisis Descriptivo</h6>
-                        <div id="audit-feedback" class="small"></div>
-                    </div>
-                    <div class="p-3 bg-dark text-white rounded text-center small">
-                        Cruz Verde: +265 Sucursales | Modelo de Red Operativa
+                    <div class="info-box" id="audit-feedback" style="font-size: 0.85rem;">
+                        <!-- Feedback automático -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
+    const data = {
+        lin: {
+            name: "Logística de Entrada",
+            desc: "Centralización en 9 bodegas estratégicas administradas por Grupo Bofasa. Gestión preventiva de inventarios para mitigar crisis de suministro global.",
+            kpis: [{l: "Bodegas", v: "9"}, {l: "Capacidad", v: "8,500m²"}, {l: "SKUs", v: "18,000"}, {l: "Abasto Local", v: "70%"}]
+        },
+        ops: {
+            name: "Operaciones (Retail)",
+            desc: "Red nacional de 265 farmacias Cruz Verde. Cumplimiento estricto del Acuerdo 181-2019 (Venta bajo receta) y control de dispensación técnica.",
+            kpis: [{l: "Sucursales", v: "265"}, {l: "Puntos Grupo", v: "342"}, {l: "Ubicaciones", v: "15 Deptos"}, {l: "Control", v: "MSPAS"}]
+        },
+        lout: {
+            name: "Logística de Salida",
+            desc: "Distribución horizontal masiva. Abastecimiento de tiendas de barrio y entregas de última milla con compromiso de 48 horas.",
+            kpis: [{l: "Tiendas B2B", v: "64,000"}, {l: "Pedidos/Día", v: "3,500"}, {l: "Lead Time", v: "48h"}, {l: "Pickers", v: "50+"}]
+        },
+        mkt: {
+            name: "Marketing y Ventas",
+            desc: "Transición de ventas transaccionales a relacionales. Programas de lealtad específicos (Club Huggies, Pleni Club) y estrategia de contenidos educativos.",
+            kpis: [{l: "Marcas Propias", v: "Cruz Verde"}, {l: "PBX Unificado", v: "1728"}, {l: "Canales", v: "Omnicanal"}, {l: "Lealtad", v: "Oh My Card"}]
+        },
+        srv: {
+            name: "Servicio Post-Venta",
+            desc: "Servicios clínicos especializados como el Centro Accu-Chek y el sistema 'Salud y Empresa' para clientes corporativos y pacientes crónicos.",
+            kpis: [{l: "Centro", v: "Accu-Chek"}, {l: "Socio", v: "Roche"}, {l: "Foco", v: "Diabéticos"}, {l: "B2B Corp", v: "S&E"}]
+        },
+        infra: {
+            name: "Infraestructura",
+            desc: "Soporte institucional de Grupo Bofasa con 38 años de experiencia. Estructura financiera robusta para expansión y cumplimiento legal.",
+            kpis: [{l: "Antigüedad", v: "38 Años"}, {l: "Grupo", v: "Bofasa"}, {l: "Respaldo", v: "Sólido"}, {l: "Expansión", v: "Sostenida"}]
+        },
+        rrhh: {
+            name: "Recursos Humanos",
+            desc: "Gestión de fuerza laboral especializada. Capacitación en control de inventarios farmacéuticos y dirección técnica por químicos farmacéuticos.",
+            kpis: [{l: "Colaboradores", v: "+3,500"}, {l: "Dirección", v: "Técnica"}, {l: "Perfil", v: "Especializado"}, {l: "Capacitación", v: "Rígida"}]
+        },
+        tech: {
+            name: "Desarrollo Tecnológico",
+            desc: "Implementación de WMS y ERP en la nube. Uso de terminales Hand Held para precisión de inventario y visibilidad omnicanal en tiempo real.",
+            kpis: [{l: "Sistemas", v: "WMS/ERP"}, {l: "Nube", v: "100%"}, {l: "Tracking", v: "Real Time"}, {l: "Hardware", v: "Hand Held"}]
+        },
+        comp: {
+            name: "Abastecimiento",
+            desc: "Negociación de economías de escala con laboratorios. Estrategia de priorización nacional para evitar quiebres ante crisis internacionales.",
+            kpis: [{l: "Poder Compra", v: "Alto"}, {l: "Riesgo", v: "Mitigado"}, {l: "Mercado", v: "Nacional"}, {l: "Volumen", v: "Escalable"}]
+        }
+    };
+
+    function inspect(id) {
+        const item = data[id];
+
+        // Update active class
+        document.querySelectorAll('.block').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+
+        let kpiHtml = '';
+        item.kpis.forEach(k => {
+            kpiHtml += `<div class="kpi-card"><span class="kpi-value">${k.v}</span><span class="kpi-label">${k.l}</span></div>`;
+        });
+
+        const html = `
+            <div class="info-box" style="margin-top: 25px; animation: fadeIn 0.3s;">
+                <h3 style="display:flex; align-items:center; gap:10px;">
+                    <i class="${event.currentTarget.querySelector('i').className}"></i>
+                    ${item.name}
+                </h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">${item.desc}</p>
+                <div class="kpi-grid">
+                    ${kpiHtml}
+                </div>
+            </div>
+        `;
+        document.getElementById('inspector-panel').innerHTML = html;
+    }
+
     function runAudit() {
         const ing = parseFloat(document.getElementById('ing-input').value) || 0;
         const log = parseFloat(document.getElementById('log-input').value) || 0;
@@ -162,8 +459,8 @@
         const adm = parseFloat(document.getElementById('adm-input').value) || 0;
         const tech = parseFloat(document.getElementById('tech-input').value) || 0;
 
-        if (ing <= 0) {
-            alert("Ingrese un valor de ingresos válido.");
+        if (ing === 0) {
+            alert("Por favor ingrese un valor de ingresos para calcular.");
             return;
         }
 
@@ -171,44 +468,44 @@
         const margin = ing - totalCost;
         const marginPerc = ((margin / ing) * 100).toFixed(2);
 
-        document.getElementById('initial-msg').style.display = 'none';
-        document.getElementById('audit-output').style.display = 'block';
-        
-        document.getElementById('res-cost-val').innerText = `Q${totalCost.toLocaleString()}`;
+        document.getElementById('audit-result').style.display = 'block';
         document.getElementById('res-margin-val').innerText = `${marginPerc}%`;
+        document.getElementById('res-cost-val').innerText = `Q${totalCost.toLocaleString()}`;
 
-        let feedback = "<strong>Estrategia de Cadena de Valor:</strong><br><br>";
-        
+        let feedback = "<strong>Diagnóstico Estratégico:</strong><br>";
         if (ops > (totalCost * 0.4)) {
-            feedback += "• <strong>Gasto Operativo:</strong> Es la partida dominante. Cruz Verde compensa esto con su red de 265 puntos de venta de alta rotación.<br>";
+            feedback += "• Los costos operativos son dominantes. Cruz Verde mitiga esto con su red de 265 farmacias de alta rotación.";
         }
         if (tech < (totalCost * 0.05)) {
-            feedback += "• <strong>Alerta Tecnológica:</strong> Inversión baja. Para Cruz Verde, el uso de WMS y ERP en la nube es crítico para la precisión de inventarios.<br>";
+            feedback += "<br>• Alerta: La inversión tecnológica es baja para el estándar de WMS/Nube requerido.";
         }
         if (marginPerc > 15) {
-            feedback += "• <strong>Situación:</strong> Modelo saludable. El margen supera el promedio regional del sector retail farmacéutico.";
+            feedback += "<br>• Modelo saludable: El margen supera el promedio regional del sector retail farmacéutico.";
+            document.getElementById('audit-status').className = 'badge-success';
         } else {
-            feedback += "• <strong>Optimización:</strong> Se requiere revisar economías de escala en abastecimiento mediante Grupo Bofasa.";
+            feedback += "<br>• Optimización requerida: Revisar economías de escala en abastecimiento (Bofasa).";
+            document.getElementById('audit-status').className = 'badge-warning';
+            document.getElementById('audit-status').innerText = 'REVISIÓN RECOMENDADA';
         }
 
         document.getElementById('audit-feedback').innerHTML = feedback;
     }
 
-    function downloadPDF() {
-        const element = document.getElementById('area-reporte');
-        const opt = {
-            margin: 0.5,
-            filename: 'Auditoria_CruzVerde_2026.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-        html2pdf().set(opt).from(element).save();
-    }
+    // Initialize with first activity
+    window.onload = () => {
+        const first = document.querySelector('.block');
+        if (first) first.click();
+    };
 </script>
+
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
 
 </body>
 </html>
-
 
 
