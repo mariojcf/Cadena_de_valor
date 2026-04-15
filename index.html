@@ -3,92 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auditoría de Valor - Donovan Werke</title>
+    <title>SAV: Auditoría Cruz Verde</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; }
-        .card { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); page-break-inside: avoid; }
-        .btn-primary { background-color: #1e3a8a; border: none; padding: 12px; font-weight: bold; }
-        .btn-success { background-color: #198754; border: none; padding: 12px; font-weight: bold; }
-        .header-section { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 40px 0; border-radius: 0 0 30px 30px; margin-bottom: 30px; }
-        
-        /* Ajustes específicos para el PDF */
-        @media print {
-            .btn, .header-section { display: none; }
-            body { background-color: white; }
-            .container { width: 100%; max-width: 100%; }
+        :root {
+            --cv-green: #1b4332;
+            --cv-accent: #52b788;
         }
+        body { font-family: 'Inter', sans-serif; background-color: #f0f7f4; color: #1a1c1a; }
+        h1, h2, h3, h4 { font-family: 'Lexend', sans-serif; }
         
-        #contenido-pdf { padding: 15px; }
-        .form-label { font-size: 0.85rem; font-weight: 600; color: #4b5563; }
-        .result-box { border-left: 5px solid #3b82f6; background-color: #f8fafc; }
+        .header-cv { 
+            background: var(--cv-green); 
+            color: white; 
+            padding: 40px 0; 
+            border-radius: 0 0 40px 40px; 
+            box-shadow: 0 10px 25px rgba(27, 67, 50, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .card { 
+            border: none; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); 
+            page-break-inside: avoid;
+        }
+
+        .block-viz {
+            border: 1px solid #d8e2dc;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            background: white;
+            transition: 0.3s;
+            cursor: default;
+        }
+        .block-viz:hover { background: #f0f7f4; border-color: var(--cv-accent); }
+        .block-viz i { color: var(--cv-green); font-size: 1.5rem; margin-bottom: 10px; }
+
+        .btn-cv-primary { background: var(--cv-green); color: white; border: none; padding: 12px; font-weight: 700; border-radius: 10px; }
+        .btn-cv-primary:hover { background: #2d6a4f; color: white; }
+        
+        .btn-cv-pdf { background: #198754; color: white; border: none; padding: 12px; font-weight: 700; border-radius: 10px; }
+
+        .result-panel { border-left: 6px solid var(--cv-accent); background: #f9fffb; padding: 20px; border-radius: 12px; }
+
+        @media print {
+            .no-print { display: none !important; }
+            .header-cv { background: white !important; color: black !important; border-bottom: 2px solid #eee; }
+        }
     </style>
 </head>
 <body>
 
-<div class="header-section text-center">
+<div class="header-cv text-center no-print">
     <div class="container">
-        <h1 class="display-5 fw-bold">Sistema de Auditoría de Valor (SAV)</h1>
-        <p class="lead">Herramienta de Análisis Cuantitativo - Ingeniería de Sistemas</p>
+        <p class="text-uppercase mb-1 fw-bold" style="letter-spacing: 2px; opacity: 0.8;">Ingeniería de Sistemas - Auditoría Estratégica</p>
+        <h1 class="display-5 fw-bold">Cruz Verde: Sistema de Auditoría de Valor</h1>
     </div>
 </div>
 
-<div class="container mb-5">
-    <div id="contenido-pdf">
-        <div class="row g-4">
-            <div class="col-lg-6">
-                <div class="card p-4 h-100">
-                    <h4 class="mb-4 text-primary border-bottom pb-2">Entrada de Parámetros</h4>
-                    
-                    <h6 class="fw-bold text-secondary mt-2">ACTIVIDADES PRIMARIAS (Q)</h6>
-                    <div class="row g-2">
-                        <div class="col-6"><label class="form-label">Logística Interna</label><input type="number" id="logInt" class="form-control" placeholder="8500"></div>
-                        <div class="col-6"><label class="form-label">Operaciones</label><input type="number" id="ops" class="form-control" placeholder="22000"></div>
-                        <div class="col-6"><label class="form-label">Logística Externa</label><input type="number" id="logExt" class="form-control" placeholder="4500"></div>
-                        <div class="col-6"><label class="form-label">Marketing y Ventas</label><input type="number" id="mkt" class="form-control" placeholder="6000"></div>
-                    </div>
+<div class="container mb-5" id="area-reporte">
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card p-4 h-100">
+                <div class="d-flex align-items-center mb-4">
+                    <i class="fas fa-calculator fa-2x text-success me-3"></i>
+                    <h3 class="mb-0 text-dark">Consola de Datos Cuantitativos</h3>
+                </div>
 
-                    <h6 class="fw-bold text-secondary mt-4">ACTIVIDADES DE SOPORTE (Q)</h6>
-                    <div class="row g-2">
-                        <div class="col-6"><label class="form-label">Infraestructura/RRHH</label><input type="number" id="soporte" class="form-control" placeholder="3500"></div>
-                        <div class="col-6"><label class="form-label">Desarrollo (I+D)</label><input type="number" id="tecnologia" class="form-control" placeholder="2000"></div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Ingresos Proyectados (Q)</label>
+                        <input type="number" id="ing-input" class="form-control" placeholder="1000000">
                     </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Costos Logísticos (Q)</label>
+                        <input type="number" id="log-input" class="form-control" placeholder="150000">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Operaciones Retail (Q)</label>
+                        <input type="number" id="ops-input" class="form-control" placeholder="400000">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Mkt y Programas Lealtad (Q)</label>
+                        <input type="number" id="mkt-input" class="form-control" placeholder="80000">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Gastos Admins (Q)</label>
+                        <input type="number" id="adm-input" class="form-control" placeholder="120000">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">I+D y Tecnología Nube (Q)</label>
+                        <input type="number" id="tech-input" class="form-control" placeholder="50000">
+                    </div>
+                </div>
 
-                    <div class="mt-4 pt-3 border-top">
-                        <label class="form-label fw-bold">Ingresos Brutos del Lote</label>
-                        <input type="number" id="ingresos" class="form-control form-control-lg border-primary" placeholder="65000">
+                <div class="mt-4 row g-2 no-print">
+                    <div class="col-6">
+                        <button class="btn btn-cv-primary w-100" onclick="runAudit()">EJECUTAR AUDITORÍA</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-cv-pdf w-100" onclick="downloadPDF()">
+                            <i class="fas fa-file-pdf me-2"></i>DESCARGAR REPORTE
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-lg-6">
-                <div class="card p-4 h-100 bg-white shadow-sm border">
-                    <h4 class="mb-4 text-primary border-bottom pb-2">Reporte Estratégico</h4>
-                    <div id="pantalla-inicial" class="text-center py-5">
-                        <p class="text-muted">Esperando procesamiento de datos...</p>
-                    </div>
-                    
-                    <div id="resultados-finales" style="display:none;">
-                        <div class="p-3 mb-3 result-box" id="resCuantitativo"></div>
-                        <div class="p-3 mb-3 border rounded bg-light" id="resDescriptivo"></div>
-                        
-                        <div class="text-center mt-3 text-muted small">
-                            <p>Análisis generado para Donovan Werke - Prohibida su reproducción total.</p>
+        <div class="col-lg-5">
+            <div class="card p-4 h-100" id="audit-result-panel">
+                <h3 class="text-dark mb-4 border-bottom pb-2">Diagnóstico de Valor</h3>
+                <div id="initial-msg" class="text-center py-5">
+                    <i class="fas fa-chart-line fa-3x text-light mb-3"></i>
+                    <p class="text-muted small">Ingrese los valores operativos para generar el análisis de Cruz Verde.</p>
+                </div>
+
+                <div id="audit-output" style="display: none;">
+                    <div class="row text-center mb-4">
+                        <div class="col-6">
+                            <div class="p-3 bg-light rounded border">
+                                <span class="d-block text-muted small">COSTO TOTAL</span>
+                                <h4 class="fw-bold mb-0" id="res-cost-val">Q0</h4>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-light rounded border">
+                                <span class="d-block text-muted small">EFICIENCIA</span>
+                                <h4 class="fw-bold mb-0 text-success" id="res-margin-val">0%</h4>
+                            </div>
                         </div>
                     </div>
+                    <div class="result-panel mb-3">
+                        <h6 class="fw-bold text-success"><i class="fas fa-microscope me-2"></i>Análisis Descriptivo</h6>
+                        <div id="audit-feedback" class="small"></div>
+                    </div>
+                    <div class="p-3 bg-dark text-white rounded text-center small">
+                        Cruz Verde: +265 Sucursales | Modelo de Red Operativa
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6 mb-2">
-            <button class="btn btn-primary w-100" onclick="ejecutarAnalisis()">PROCESAR DATOS</button>
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-success w-100" onclick="descargarReporte()">DESCARGAR REPORTE (PDF)</button>
         </div>
     </div>
 </div>
@@ -96,59 +154,56 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
-    function ejecutarAnalisis() {
-        const lI = parseFloat(document.getElementById('logInt').value) || 0;
-        const op = parseFloat(document.getElementById('ops').value) || 0;
-        const lE = parseFloat(document.getElementById('logExt').value) || 0;
-        const mk = parseFloat(document.getElementById('mkt').value) || 0;
-        const sp = parseFloat(document.getElementById('soporte').value) || 0;
-        const tc = parseFloat(document.getElementById('tecnologia').value) || 0;
-        const totalIngresos = parseFloat(document.getElementById('ingresos').value) || 0;
+    function runAudit() {
+        const ing = parseFloat(document.getElementById('ing-input').value) || 0;
+        const log = parseFloat(document.getElementById('log-input').value) || 0;
+        const ops = parseFloat(document.getElementById('ops-input').value) || 0;
+        const mkt = parseFloat(document.getElementById('mkt-input').value) || 0;
+        const adm = parseFloat(document.getElementById('adm-input').value) || 0;
+        const tech = parseFloat(document.getElementById('tech-input').value) || 0;
 
-        const costoTotal = lI + op + lE + mk + sp + tc;
-        const margen = totalIngresos - costoTotal;
-        const margenPorc = totalIngresos > 0 ? ((margen / totalIngresos) * 100).toFixed(2) : 0;
-
-        document.getElementById('pantalla-inicial').style.display = 'none';
-        document.getElementById('resultados-finales').style.display = 'block';
-
-        document.getElementById('resCuantitativo').innerHTML = `
-            <h5 class="text-primary">Análisis Cuantitativo</h5>
-            <p class="mb-1"><strong>Costo Total Operativo:</strong> Q${costoTotal.toLocaleString()}</p>
-            <p class="mb-1"><strong>Margen Neto:</strong> Q${margen.toLocaleString()}</p>
-            <p class="h3 text-success"><strong>Eficiencia: ${margenPorc}%</strong></p>
-        `;
-
-        let diagnostico = "<h5 class='text-primary'>Análisis Descriptivo</h5>";
-        if (op > (costoTotal * 0.45)) {
-            diagnostico += "Se identifica una <b>concentración crítica</b> en la etapa de Producción. La alta incidencia de costos operativos sugiere la necesidad urgente de automatizar los procesos de envasado y etiquetado para escalar la rentabilidad.";
-        } else if (mk > (costoTotal * 0.20)) {
-            diagnostico += "Los costos de Marketing y Ventas superan el promedio sectorial. Se recomienda auditar el ROI de la fuerza de ventas médica institucional.";
-        } else {
-            diagnostico += "Estructura de costos saludable. Se recomienda destinar el excedente de margen a la actualización tecnológica (I+D) para mantener la ventaja competitiva en el mercado farmacéutico.";
+        if (ing <= 0) {
+            alert("Ingrese un valor de ingresos válido.");
+            return;
         }
-        document.getElementById('resDescriptivo').innerHTML = diagnostico;
+
+        const totalCost = log + ops + mkt + adm + tech;
+        const margin = ing - totalCost;
+        const marginPerc = ((margin / ing) * 100).toFixed(2);
+
+        document.getElementById('initial-msg').style.display = 'none';
+        document.getElementById('audit-output').style.display = 'block';
+        
+        document.getElementById('res-cost-val').innerText = `Q${totalCost.toLocaleString()}`;
+        document.getElementById('res-margin-val').innerText = `${marginPerc}%`;
+
+        let feedback = "<strong>Estrategia de Cadena de Valor:</strong><br><br>";
+        
+        if (ops > (totalCost * 0.4)) {
+            feedback += "• <strong>Gasto Operativo:</strong> Es la partida dominante. Cruz Verde compensa esto con su red de 265 puntos de venta de alta rotación.<br>";
+        }
+        if (tech < (totalCost * 0.05)) {
+            feedback += "• <strong>Alerta Tecnológica:</strong> Inversión baja. Para Cruz Verde, el uso de WMS y ERP en la nube es crítico para la precisión de inventarios.<br>";
+        }
+        if (marginPerc > 15) {
+            feedback += "• <strong>Situación:</strong> Modelo saludable. El margen supera el promedio regional del sector retail farmacéutico.";
+        } else {
+            feedback += "• <strong>Optimización:</strong> Se requiere revisar economías de escala en abastecimiento mediante Grupo Bofasa.";
+        }
+
+        document.getElementById('audit-feedback').innerHTML = feedback;
     }
 
-    function descargarReporte() {
-        const elemento = document.getElementById('contenido-pdf');
-        
-        // Configuraciones para evitar el error de la imagen cortada
-        const opciones = {
-            margin: 0.3,
-            filename: 'Reporte_Estrategico_Donovan.pdf',
-            image: { type: 'jpeg', quality: 1 },
-            html2canvas: { 
-                scale: 2, 
-                useCORS: true,
-                logging: false,
-                scrollY: 0
-            },
+    function downloadPDF() {
+        const element = document.getElementById('area-reporte');
+        const opt = {
+            margin: 0.5,
+            filename: 'Auditoria_CruzVerde_2026.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
-
-        // Generar y descargar
-        html2pdf().set(opciones).from(elemento).save();
+        html2pdf().set(opt).from(element).save();
     }
 </script>
 
